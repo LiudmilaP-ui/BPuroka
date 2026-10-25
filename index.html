@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#183e4a">
+  <title>Генератор заданий «Передача культурного кода»</title>
+  <style>
+    :root { color-scheme: light; font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif; color: #20353c; background: #f3f6f4; }
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 34px 18px 52px; }
+    button, input, select, textarea { font: inherit; }
+    .app { width: min(100%, 870px); margin: auto; overflow: hidden; border: 1px solid #dce6e1; border-radius: 22px; box-shadow: 0 15px 45px #244d4214; background: #fff; }
+    .hero { padding: 31px 38px 28px; color: #fff; background: linear-gradient(125deg, #173e4c, #28615a); }
+    .eyebrow { margin: 0 0 13px; font-weight: 700; letter-spacing: .11em; text-transform: uppercase; font-size: 12px; color: #b5ddcb; }
+    h1 { margin: 0; font-size: clamp(26px, 4vw, 34px); letter-spacing: -.035em; line-height: 1.17; }
+    .hero p { max-width: 680px; margin: 14px 0 0; color: #e0f1e9; font-size: 15px; line-height: 1.58; }
+    .content { padding: 12px 38px 34px; }
+    h2 { margin: 28px 0 10px; font-size: 19px; color: #1b4549; }
+    .section-note { margin: 0 0 12px; color: #61747a; line-height: 1.48; font-size: 13px; }
+    label { display: block; margin: 16px 0 7px; font-weight: 650; font-size: 14px; }
+    input:not([type="radio"]), select, textarea { display: block; width: 100%; min-height: 44px; padding: 10px 12px; border: 1px solid #c8d6d2; border-radius: 9px; background: #fff; color: #23393e; outline-offset: 2px; }
+    textarea { min-height: 80px; resize: vertical; }
+    :is(input, select, textarea):focus-visible { outline: 2px solid #367b75; border-color: #367b75; }
+    .two { display: grid; grid-template-columns: 1fr 1fr; gap: 0 18px; }
+    .hint { display: block; color: #6a7d81; font-size: 12px; line-height: 1.5; margin-top: 6px; }
+    fieldset { border: 0; padding: 0; margin: 12px 0 3px; }
+    legend { font-weight: 650; font-size: 14px; margin-bottom: 8px; }
+    .choice { display: flex; align-items: flex-start; gap: 9px; padding: 7px 0; font-size: 14px; font-weight: 400; margin: 0; cursor: pointer; }
+    .choice input { accent-color: #276b62; margin-top: 3px; flex: 0 0 auto; }
+    .actions { margin-top: 27px; display: flex; gap: 10px; flex-wrap: wrap; }
+    button { border: 0; border-radius: 9px; padding: 12px 16px; background: #1f5555; color: #fff; font-weight: 700; cursor: pointer; }
+    button.secondary { color: #254447; background: #eaf1ee; }
+    button:hover { filter: brightness(.96); }
+    button:focus-visible { outline: 3px solid #86c0b1; outline-offset: 3px; }
+    .panel { margin-top: 23px; background: #f2f7f4; border: 1px solid #d9e8df; border-radius: 12px; padding: 16px 18px; }
+    .panel strong { color: #24514c; }
+    .panel p { margin: 7px 0 0; color: #4e6869; font-size: 13px; line-height: 1.6; }
+    #result { display: none; border-top: 1px solid #e5ede8; margin-top: 28px; padding-top: 4px; }
+    #result h2 { margin-bottom: 6px; }
+    #result .section-note { margin-bottom: 14px; }
+    pre { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; max-height: 500px; overflow-y: auto; border: 1px solid #dce5df; border-radius: 10px; background: #f7f9f7; padding: 18px; font: 13px/1.65 ui-monospace, Consolas, monospace; }
+    #status { min-height: 21px; margin: 12px 0 0; font-size: 13px; color: #2c6157; }
+    .footer { padding: 16px 38px 23px; color: #667b7c; background: #f8faf8; border-top: 1px solid #e4ebe7; font-size: 12px; line-height: 1.6; }
+    @media (max-width: 650px) { body { padding: 10px; } .hero { padding: 27px 22px; } .content { padding: 8px 21px 27px; } .footer { padding: 14px 21px; } .two { grid-template-columns: 1fr; gap: 0; } .actions button { width: 100%; } }
+  </style>
+</head>
+<body>
+<main class="app">
+  <header class="hero">
+    <p class="eyebrow">Авторский методический инструмент</p>
+    <h1>Генератор заданий<br>«Передача культурного кода»</h1>
+    <p>Для учителей разных предметов и классов. Помогает сформировать запрос к ИИ для разработки учебного задания, раскрывающего воспитательный потенциал урока через <strong>белорусский культурный код</strong>.</p>
+  </header>
+  <div class="content">
+    <form id="generator">
+      <h2>01 / Параметры урока</h2>
+      <p class="section-note">Укажите конкретную тему: задача должна помогать изучать именно её, а не заменять предметное содержание разговором о культуре.</p>
+      <div class="two">
+        <div>
+          <label for="subject">Учебный предмет</label>
+          <input id="subject" value="История" placeholder="Например, математика, биология, музыка" required>
+        </div>
+        <div>
+          <label for="grade">Класс или возраст учащихся</label>
+          <input id="grade" value="7 класс" placeholder="Например, 5 класс или 15–16 лет" required>
+        </div>
+      </div>
+      <label for="topic">Тема урока</label>
+      <textarea id="topic" placeholder="Например, осевая симметрия; свойства материалов; народные ремёсла" required></textarea>
+
+      <h2>02 / Белорусский культурный код</h2>
+      <p class="section-note">Можно выбрать культурную основу или доверить ИИ предложить обоснованный вариант именно из белорусского культурного наследия.</p>
+      <label for="culture">Какой аспект белорусского культурного кода раскрыть?</label>
+      <select id="culture">
+        <option>Традиции и преемственность поколений</option>
+        <option selected>Родной край и культурная память</option>
+        <option>Культурное наследие и его сохранение</option>
+        <option>Человек и его связь с родной землёй</option>
+        <option>Белорусский язык, литература и фольклор</option>
+        <option>Народное искусство, орнаменты и ремёсла</option>
+        <option>Календарные праздники и обряды</option>
+        <option>Подобрать белорусскую культурную основу самостоятельно</option>
+      </select>
+      <label for="object">Конкретный объект белорусского наследия (необязательно)</label>
+      <input id="object" placeholder="Например, слуцкий пояс, соломоплетение, традиция своего региона">
+      <span class="hint">Если поле пустое, ИИ должен подобрать подходящий объект с обоснованием его связи с темой урока.</span>
+      <label for="source">Известный источник или материал для проверки (необязательно)</label>
+      <textarea id="source" placeholder="Например, страница музея, учебник, публикация национального инвентаря наследия, архивное описание"></textarea>
+      <span class="hint">Можно указать название, ссылку или фрагмент источника. ИИ не должен выдавать несуществующие источники за проверенные.</span>
+      <label for="goal">Воспитательная направленность</label>
+      <select id="goal">
+        <option>Связь поколений и сохранение культурного наследия</option>
+        <option>Ответственность за сохранение культурных ценностей</option>
+        <option>Связь человека с родным краем</option>
+        <option>Уважение к труду и мастерству</option>
+        <option>Историческая память и преемственность</option>
+        <option>Осмысление традиций и их значения сегодня</option>
+        <option>Определить подходящую направленность самостоятельно</option>
+      </select>
+
+      <h2>03 / Формат задания</h2>
+      <fieldset>
+        <legend>Форма деятельности учащихся</legend>
+        <label class="choice"><input type="radio" name="format" value="На выбор ИИ с обоснованием" checked> На выбор ИИ с обоснованием</label>
+        <label class="choice"><input type="radio" name="format" value="Индивидуальная работа"> Индивидуальная работа</label>
+        <label class="choice"><input type="radio" name="format" value="Работа в парах или группах"> Работа в парах или группах</label>
+        <label class="choice"><input type="radio" name="format" value="Исследовательское или проблемное задание"> Исследовательское или проблемное задание</label>
+        <label class="choice"><input type="radio" name="format" value="Творческое или практико-ориентированное задание"> Творческое или практико-ориентированное задание</label>
+      </fieldset>
+      <label for="duration">Время выполнения</label>
+      <select id="duration">
+        <option>3–5 минут</option>
+        <option selected>5–10 минут</option>
+        <option>10–15 минут</option>
+        <option>Домашнее задание или мини-проект</option>
+      </select>
+      <label for="extra">Дополнительные условия (необязательно)</label>
+      <textarea id="extra" placeholder="Например, без интернета, разноуровневый класс, работа с местным материалом"></textarea>
+
+      <div class="actions">
+        <button type="submit">Сформировать промпт</button>
+        <button type="reset" class="secondary">Очистить форму</button>
+      </div>
+    </form>
+
+    <section id="result" aria-label="Сформированный промпт">
+      <h2>Готовый педагогический запрос</h2>
+      <p class="section-note">Скопируйте его в выбранный ИИ-сервис. Генератор создаёт именно текст запроса, не само учебное задание.</p>
+      <pre id="prompt" tabindex="0"></pre>
+      <div class="actions">
+        <button type="button" id="copy">Скопировать промпт</button>
+        <button type="button" id="download" class="secondary">Скачать .txt</button>
+      </div>
+      <p id="status" role="status" aria-live="polite"></p>
+    </section>
+
+    <aside class="panel">
+      <strong>Проверка учителем перед использованием задания</strong>
+      <p>Связан ли белорусский культурный контекст с темой урока по существу? Подтверждены ли культурные и исторические сведения? Решает ли ученик предметную задачу и самостоятельно осмысливает смысл? Оцениваются ли действия и аргументы, а не личные убеждения?</p>
+    </aside>
+  </div>
+  <footer class="footer">Работает локально в браузере и не отправляет данные на сервер. Для создания учебного задания перенесите полученный запрос в ИИ-сервис. Ответ ИИ требует фактической и методической проверки педагогом.</footer>
+</main>
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+const field = id => $(id).value.trim();
+
+function createPrompt() {
+  const subject = field("subject");
+  const grade = field("grade");
+  const topic = field("topic");
+  const culture = field("culture");
+  const object = field("object") || "Не задан. Предложи подходящий объект белорусского культурного наследия и обоснуй выбор.";
+  const source = field("source") || "Не предоставлен. Отметь сведения, требующие проверки учителем, и предложи типы авторитетных источников, не выдумывая названий, ссылок и цитат.";
+  const goal = field("goal");
+  const format = document.querySelector('input[name="format"]:checked').value;
+  const duration = field("duration");
+  const extra = field("extra") || "Не заданы";
+
+  return `Ты — методический эксперт по проектированию учебных заданий для белорусской школы. Помоги учителю раскрыть воспитательный потенциал урока через БЕЛОРУССКИЙ КУЛЬТУРНЫЙ КОД, сохраняя предметную точность и свободу личного осмысления учащихся.
+
+ЗАДАЧА
+Разработай готовое к адаптации учебное задание по указанной теме. Оно должно одновременно решать предметную задачу, раскрывать достоверный культурный смысл и создавать условия для осмысленного отношения к культурному наследию Беларуси. Национальная тематика не должна быть декоративным дополнением.
+
+ПАРАМЕТРЫ УРОКА
+Предмет: ${subject}
+Класс или возраст: ${grade}
+Тема: ${topic}
+Аспект белорусского культурного кода: ${culture}
+Предпочтительный объект культурного наследия: ${object}
+Предоставленный учителем источник / материал проверки: ${source}
+Воспитательная направленность: ${goal}
+Формат: ${format}
+Продолжительность: ${duration}
+Дополнительные условия: ${extra}
+
+ОБЯЗАТЕЛЬНАЯ МЕТОДИЧЕСКАЯ ЛОГИКА
+Предметное содержание → подтверждённый белорусский культурный контекст → активное действие ученика → осмысление культурного значения → наблюдаемые признаки образовательного результата.
+
+СНАЧАЛА ПРОВЕРЬ УМЕСТНОСТЬ КУЛЬТУРНОЙ СВЯЗИ
+1. Определи, есть ли содержательная, объяснимая связь между указанной темой и выбранным аспектом или объектом БЕЛОРУССКОГО культурного наследия. Покажи, какое предметное понятие или умение будет освоено через эту связь.
+2. Если связь слабая, не придумывай легенды и не добавляй народные символы только для оформления. Предложи другой, более обоснованный контекст именно белорусской культуры и объясни, почему он лучше работает для темы.
+3. Если надёжной связи установить не удаётся, прямо скажи об этом. Не выдавай натянутую ассоциацию за методическое решение; предложи учителю уточнить тему, объект или источник, не подменяя белорусский культурный код произвольными общими ценностями.
+4. Если педагог указал конкретный объект или источник, используй его как приоритетный материал, но не считай любые приведённые сведения автоматически достоверными.
+
+ТРЕБОВАНИЯ К ЗАДАНИЮ
+• Сохраняй учебную цель предмета: ученик действительно изучает заданную тему.
+• Организуй активное действие ученика: исследовать, сопоставить, объяснить, аргументировать, интерпретировать, решить задачу или предложить обоснованное решение.
+• Помоги раскрыть культурный смысл через факты, практики, историю, память людей или традиции Беларуси — без готовой «правильной» морали.
+• Не требуй от учащихся демонстрации обязательных чувств, гордости или согласия с заранее заданным выводом.
+• Не объявляй воспитательный эффект доказанным только потому, что ученик выполнил задание. Формулируй наблюдаемые признаки осмысления, а не оценки личности.
+• Не навязывай межпредметность, если она не нужна для решения предметной задачи.
+
+ДОСТОВЕРНОСТЬ
+Не выдумывай даты, происхождение традиций, значения орнаментов, исторические события, цитаты, музейные описания и ссылки. Отличай общебелорусское наследие от региональных практик, современный фестиваль — от исторического обряда, факт — от интерпретации. Если проверка источника недоступна, прямо пометь утверждение «Требует проверки» и укажи, что именно педагог должен проверить. Не называй предположение проверенным фактом.
+
+ФОРМАТ ОТВЕТА
+1. Короткая оценка уместности культурного контекста и объяснение связи с темой урока (или обоснованная альтернатива).
+2. Название задания и его предметная цель.
+3. Инструкция ученику: исходный материал или рекомендации по его подготовке, последовательность действий, вопросы и конкретный продукт работы. Не подставляй непроверенные исторические сведения как достоверные.
+4. Методический комментарий: какой белорусский культурный смысл раскрывается; в чём воспитательный потенциал; через какую деятельность он реализуется; какие действия ученика можно наблюдать.
+5. От двух до четырёх критериев оценки предметной работы и аргументации (не убеждений или чувств ученика).
+6. Как упростить, усложнить и сократить задание.
+7. Отдельный блок «Что должен проверить педагог»: факты, источники, возрастная уместность и отсутствие искусственной культурной связи.
+
+ПЕРЕД ВЫДАЧЕЙ РЕЗУЛЬТАТА
+Проверь: соответствует ли задание теме и возрасту, выполнимо ли в указанное время, присутствуют ли реальные действия ученика, раскрывается ли культурный код Беларуси, не подменяется ли воспитательная работа навязыванием отношения, подтверждена ли фактическая основа. Исправь методические слабости; непроверяемые сведения честно обозначь.
+
+Пиши по-русски, конкретно, профессионально, без избыточной теории. Если нет оснований для качественного задания, объясни ограничение вместо искусственно красивого результата.`;
+}
+
+$("generator").addEventListener("submit", event => {
+  event.preventDefault();
+  if (!$("generator").reportValidity()) return;
+  $("prompt").textContent = createPrompt();
+  $("result").style.display = "block";
+  $("status").textContent = "";
+  $("result").scrollIntoView({ behavior: "smooth", block: "start" });
+});
+
+$("generator").addEventListener("reset", () => {
+  $("result").style.display = "none";
+  $("status").textContent = "";
+});
+
+$("copy").addEventListener("click", async () => {
+  try {
+    await navigator.clipboard.writeText($("prompt").textContent);
+    $("status").textContent = "Промпт скопирован. Вставьте его в выбранный ИИ-сервис.";
+  } catch {
+    $("status").textContent = "Автокопирование недоступно. Выделите текст выше и скопируйте его вручную.";
+    $("prompt").focus();
+  }
+});
+
+$("download").addEventListener("click", () => {
+  const blob = new Blob([$("prompt").textContent], { type: "text/plain;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "prompt-belorusskiy-kulturnyy-kod.txt";
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  $("status").textContent = "Файл с промптом подготовлен для скачивания.";
+});
+</script>
+</body>
+</html>
